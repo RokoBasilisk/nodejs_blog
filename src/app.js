@@ -8,6 +8,13 @@ const port = 5000;
 // Morgan
 app.use(morgan("tiny"));
 
+// json parse
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+
 //access to static folder/file
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -23,6 +30,19 @@ app.set("views", path.join(__dirname, "resources/views"));
 
 app.get("/", (req, res) => {
   res.render("home");
+});
+
+app.get("/search", (req, res) => {
+  let { q } = req.query;
+  console.log(q);
+  res.render("search");
+});
+
+app.post("/search", (req, res) => {
+  let { q, form_gender } = req.body;
+  console.log(q, form_gender);
+  console.log(req.body);
+  res.render("search");
 });
 
 app.get("/news", (req, res) => {
